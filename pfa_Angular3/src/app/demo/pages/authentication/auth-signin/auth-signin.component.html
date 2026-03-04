@@ -1,0 +1,82 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="auth-bg">
+      <span class="r"></span>
+      <span class="r s"></span>
+      <span class="r s"></span>
+      <span class="r"></span>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-center">
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="mb-4">
+            <i class="feather icon-unlock auth-icon"></i>
+          </div>
+
+          <h3 class="mb-4">Connexion</h3>
+
+          <!-- EMAIL -->
+          <div class="input-group mb-3 position-relative">
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Email Address"
+              [class.is-invalid]="submitted && email()?.invalid"
+            />
+
+            <div *ngIf="submitted && email()?.invalid" class="invalid-feedback d-block">
+              <div *ngIf="email()?.errors?.['required']">Email requis</div>
+              <div *ngIf="email()?.errors?.['email']">Email invalide</div>
+            </div>
+          </div>
+
+          <!-- PASSWORD -->
+ <div class="mb-4 position-relative password-wrapper">
+  <input
+    [type]="showPassword ? 'text' : 'password'"
+    formControlName="password"
+    class="form-control"
+    placeholder="Mot de passe"
+    [class.is-invalid]="submitted && password()?.invalid"
+  />
+
+  <i
+    [ngClass]="showPassword ? 'feather icon-eye' : 'feather icon-eye-off'"
+    class="toggle-icon"
+    (click)="togglePasswordVisibility()"
+  ></i>
+
+  <div *ngIf="submitted && password()?.invalid" class="invalid-feedback d-block">
+    <div *ngIf="password()?.errors?.['required']">Mot de passe requis</div>
+    <div *ngIf="password()?.errors?.['minlength']">Minimum 8 caractères</div>
+  </div>
+</div>
+
+
+          <!-- CHECKBOX -->
+          <div class="form-group text-start mb-3">
+            <div class="checkbox checkbox-fill d-inline">
+              <input type="checkbox" id="saveDetails" />
+              <label for="saveDetails" class="cr">Se souvenir de moi</label>
+            </div>
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="btn btn-primary w-100 mb-3">
+            Login
+          </button>
+
+          <!-- ERROR MESSAGE -->
+          <div class="text-danger">{{ errorMessage }}</div>
+
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>

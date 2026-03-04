@@ -1,0 +1,56 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">
+    <i class="feather icon-credit-card"></i>
+    Historique des Paiements
+  </h2>
+
+  <!-- 🔄 Message si vide -->
+  <div *ngIf="!historique || historique.length === 0" class="alert alert-info">
+    Aucun paiement trouvé.
+  </div>
+
+  <!-- 📋 Tableau -->
+  <div class="table-responsive" *ngIf="historique && historique.length > 0">
+    <table class="table table-bordered table-hover">
+      <thead >
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Montant</th>
+          <th>Statut Paiement</th>
+          <th>Statut Abonnement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let h of historique">
+          <td>{{ h.nom }}</td>
+          <td>{{ h.prenom }}</td>
+          <td>{{ h.montant }} DH</td>
+          <td>
+            <span 
+              class="badge"
+              [ngClass]="{
+                'bg-success': h.statutPaiement === 'PAYE',
+                'bg-danger': h.statutPaiement === 'NON_PAYE',
+                'bg-warning': h.statutPaiement === 'EN_ATTENTE'
+              }">
+              {{ h.statutPaiement }}
+            </span>
+          </td>
+          <td>
+            <span 
+              class="badge"
+              [ngClass]="{
+                'bg-success': h.statutAbonnement === 'ACTIF',
+                'bg-danger': h.statutAbonnement === 'INACTIF'
+              }">
+              {{ h.statutAbonnement }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
