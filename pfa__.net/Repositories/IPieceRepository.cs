@@ -9,6 +9,8 @@ namespace pfa__.net.Repositories
         Task<List<Piece>> ListerPiece(int userId);
         Task<bool> SupprimerPieceAsync(int pieceId);
         Task<List<PieceType>> GetPieceTypesAsync();
+        //duplicate
+        Task<int> DuplicatePieceAsync(int pieceId, int userId);
 
 
 

@@ -6,13 +6,14 @@
            [class]="piece.icon || piece.Icon"
            style="font-size:20px;">
         </i>
-        {{ piece.nom }}
+        {{ piece.nom || piece.typeNom || piece.TypeNom }}
       </h3>
       <div class="piece-actions">
         <button class="menu-btn" (click)="piece.showMenu = !piece.showMenu">⋮</button>
         <div class="menu-dropdown" *ngIf="piece.showMenu">
-          <button (click)="goToAddEquipement(piece.id)">Ajouter Équipement</button>
-          <button (click)="deletePiece(piece.id)">Supprimer Pièce</button>
+          <button (click)="goToAddEquipement(piece.id); piece.showMenu=false">➕ Ajouter Équipement</button>
+          <button (click)="duplicatePiece(piece.id); piece.showMenu=false">📋 Dupliquer Pièce</button>
+          <button class="btn-delete" (click)="deletePiece(piece.id); piece.showMenu=false">🗑️ Supprimer Pièce</button>
         </div>
       </div>
     </div>
@@ -31,9 +32,7 @@
             <input type="checkbox" [(ngModel)]="equip.etat" (change)="toggleEquip(equip)">
             <span class="slider round"></span>
           </label>
-          <button class="config-btn" (click)="goToCondition(equip)" title="Configurer">
-            ⚡
-          </button>
+          <button class="config-btn" (click)="goToCondition(equip)" title="Configurer">⚡</button>
           <button class="delete-btn" (click)="deleteEquip(equip.id)">🗑️</button>
         </div>
       </li>

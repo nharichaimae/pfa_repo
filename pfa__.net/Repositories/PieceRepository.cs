@@ -52,5 +52,52 @@ namespace pfa__.net.Repositories
             return await _context.PieceTypes.ToListAsync();
         }
 
+        //duplicate 
+
+        public async Task<int> DuplicatePieceAsync(int pieceId, int userId)
+        {
+            // Charger la pièce originale avec ses équipements
+            var original = await _context.Pieces
+                .Include(p => p.Equipements)
+                .FirstOrDefaultAsync(p => p.Id_Piece == pieceId);
+
+            if (original == null) throw new Exception("Pièce introuvable");
+
+
+            var baseName = System.Text.RegularExpressions.Regex.Replace(original.Nom, @"\s+\d+$", "").Trim();
+            var existingNames = await _context.Pieces
+                .Where(p => p.Id == userId && p.Nom.StartsWith(baseName))
+                .Select(p => p.Nom)
+                .ToListAsync();
+
+            int suffix = 2;
+            string newName;
+            do
+            {
+                newName = $"{baseName} {suffix}";
+                suffix++;
+            } while (existingNames.Contains(newName));
+
+            // Créer la nouvelle pièce
+            var newPiece = new Piece
+            {
+                Nom = newName,
+                type_id = original.type_id,
+                Id = userId,
+                Equipements = original.Equipements.Select(e => new Equipement
+                {
+                    Nom = e.Nom,
+                    Description = e.Description,
+                    Etat = e.Etat,
+                    type_id = e.type_id
+                }).ToList()
+            };
+
+            _context.Pieces.Add(newPiece);
+            await _context.SaveChangesAsync();
+
+            return newPiece.Id_Piece;
+        }
+
     }
 }

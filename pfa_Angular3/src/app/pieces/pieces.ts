@@ -72,4 +72,5 @@ export class PiecesComponent implements OnInit {
   deletePiece(id: number) {
     this.pieceService.deletePiece(id).subscribe(() => this.loadPieces());
   }
+
 }

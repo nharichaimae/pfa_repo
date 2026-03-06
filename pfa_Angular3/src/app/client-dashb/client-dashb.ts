@@ -127,4 +127,16 @@ export class ClientDashb {
     // à implémenter si tu as un endpoint update etat
     console.log('toggleEquip', equip);
   }
+
+  
+//duplicate
+duplicatePiece(id: number) {
+  this.pieceService.duplicatePiece(id).subscribe({
+    next: () => {
+      this.loadPieces();
+      this.cd.detectChanges();
+    },
+    error: (err) => console.error('Erreur duplication:', err)
+});
+}
 }

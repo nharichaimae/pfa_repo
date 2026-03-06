@@ -79,5 +79,24 @@ namespace pfa__.net.Controllers
 
             return Ok(result);
         }
+        //duplicate 
+
+        [HttpPost("piece/{id}/duplicate")]
+        public async Task<IActionResult> DuplicatePiece(int id)
+        {
+            var userId = (int?)HttpContext.Items["UserId"];
+            if (userId == null)
+                return Unauthorized(new { message = "JWT invalide ou manquant" });
+
+
+            int newPieceId = await _pieceRepository.DuplicatePieceAsync(id, userId.Value);
+            return CreatedAtAction(
+                nameof(GetPiecesByUser),
+                new { id = newPieceId },
+                new { message = "Pièce dupliquée", pieceId = newPieceId }
+            );
+
+
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pfa__.net")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec13159317ede266a0bd7c0629079414f870de3b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32a1d28af59f8c046268ff5e7a42c130a084ec26")]
 [assembly: System.Reflection.AssemblyProductAttribute("pfa__.net")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pfa__.net")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

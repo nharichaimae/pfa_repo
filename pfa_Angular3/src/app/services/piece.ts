@@ -91,4 +91,7 @@ export class PieceService {
   deleteEquipement(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/equipement/${id}`, { headers: this.getHeaders() });
   }
+  duplicatePiece(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/piece/${id}/duplicate`, {}, { headers: this.getHeaders() });
+  }
 }
