@@ -1,7 +1,8 @@
-﻿using pfa__.net.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using pfa__.net.Data;
 using pfa__.net.Helpers;
+using pfa__.net.Repositories;
+using pfa__.net.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ✅ Repositories
 builder.Services.AddScoped<IPieceRepository, PieceRepository>();
 builder.Services.AddScoped<IEquipementRepository, EquipementRepository>();
-builder.Services.AddScoped<IConditionRepository, ConditionRepository>();  // ← AJOUTÉ
-builder.Services.AddScoped<IRegleRepository, RegleRepository>();           // ← AJOUTÉ
+builder.Services.AddScoped<IConditionRepository, ConditionRepository>();  
+builder.Services.AddScoped<IRegleRepository, RegleRepository>();           
+builder.Services.AddScoped<SpeechService>();
 
 // Controllers
 builder.Services.AddControllers();

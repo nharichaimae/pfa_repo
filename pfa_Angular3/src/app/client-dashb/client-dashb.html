@@ -32,6 +32,25 @@
             <input type="checkbox" [(ngModel)]="equip.etat" (change)="toggleEquip(equip)">
             <span class="slider round"></span>
           </label>
+
+          <button 
+            class="voice-btn"
+            [class.recording]="equip.recording"
+            (click)="startVoiceCommand(equip)"
+            title="Commande vocale">
+
+            🎤
+
+            <div class="voice-wave">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+          </button>
+
           <button class="config-btn" (click)="goToCondition(equip)" title="Configurer">⚡</button>
           <button class="delete-btn" (click)="deleteEquip(equip.id)">🗑️</button>
         </div>

@@ -15,11 +15,11 @@
 /* ============================= */
 
 .pieces-container {
-  max-width: 1200px;
+  max-width: 1400px; /* avant 1200px */
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 28px; /* avant 20px */
   align-items: start;
 }
 
@@ -181,7 +181,10 @@
   justify-content: space-between;
   background: white;
   border-radius: 14px;
-  padding: 12px 14px;
+
+  padding: 14px 20px;   /* plus d'espace interne horizontal */
+  width: 100%;          /* prend toute la largeur de la carte */
+
   border: 1.5px solid #edf0f5;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -192,9 +195,14 @@
 }
 
 .equipements-list span {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #1e293b;
+
+  flex: 1;              /* prend plus d’espace horizontal */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* ============================= */
@@ -277,4 +285,114 @@
 
 .switch input:checked + .slider:before {
   transform: translateX(21px);
+}
+
+/* ============================= */
+/* SNAPCHAT AUDIO EFFECT */
+/* ============================= */
+
+.voice-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  transition: transform 0.2s;
+}
+
+.voice-btn:hover {
+  transform: scale(1.1);
+}
+
+/* cercles audio */
+
+.mic-circle {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ef4444;
+  opacity: 0;
+}
+
+.voice-btn.recording .mic-circle {
+  animation: snapAudio 1.6s infinite;
+}
+
+.voice-btn.recording .mic-circle.delay {
+  animation-delay: 0.8s;
+}
+
+/* animation */
+
+@keyframes snapAudio {
+
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
+}
+/* ============================= */
+/* VOICE WAVE EFFECT */
+/* ============================= */
+
+.voice-btn {
+  position: relative;
+  overflow: visible;
+}
+
+.voice-wave {
+  position: absolute;
+  bottom: -12px;
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+}
+
+.voice-wave span {
+  width: 3px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 3px;
+  animation: wave 1s infinite ease-in-out;
+}
+
+/* délais pour chaque barre */
+
+.voice-wave span:nth-child(2) { animation-delay: 0.1s; }
+.voice-wave span:nth-child(3) { animation-delay: 0.2s; }
+.voice-wave span:nth-child(4) { animation-delay: 0.3s; }
+.voice-wave span:nth-child(5) { animation-delay: 0.4s; }
+
+.voice-btn.recording .voice-wave {
+  opacity: 1;
+}
+
+/* animation */
+
+@keyframes wave {
+
+  0% { height: 6px; }
+
+  50% { height: 16px; }
+
+  100% { height: 6px; }
+
 }

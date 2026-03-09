@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PieceService, PieceType } from '../services/piece';
 import { Router } from '@angular/router';
+import RecordRTC ,{ StereoAudioRecorder }from 'recordrtc';
+import { VoiceService } from '../services/voice'; 
+
 
 @Component({
   selector: 'app-client-dashb',
@@ -15,11 +18,15 @@ export class ClientDashb {
 
   pieces: any[] = [];
   pieceTypes: PieceType[] = [];
+  recorder: any;
+  stream: any;
+  currentEquip: any;
 
   constructor(
     private pieceService: PieceService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+      private voiceService: VoiceService, // 🔹 ajouté
   ) {}
 
   ngOnInit() {
@@ -139,4 +146,63 @@ duplicatePiece(id: number) {
     error: (err) => console.error('Erreur duplication:', err)
 });
 }
+
+//voice 
+async startVoiceCommand(equip: any) {
+
+  this.currentEquip = equip;
+
+  // activer animation micro
+  equip.recording = true;
+
+  this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+  this.recorder = new RecordRTC(this.stream, {
+    type: 'audio',
+    mimeType: 'audio/wav',
+    recorderType: StereoAudioRecorder,
+    numberOfAudioChannels: 1,
+    desiredSampRate: 16000
+  });
+
+  this.recorder.startRecording();
+  console.log("Enregistrement démarré...");
+
+  // arrêter après 4s
+  setTimeout(() => this.stopRecording(), 4000);
+}
+stopRecording() {
+
+  this.recorder.stopRecording(async () => {
+
+    const blob = this.recorder.getBlob();
+
+    // arrêter animation micro
+    if(this.currentEquip){
+      this.currentEquip.recording = false;
+    }
+
+    if(!blob || blob.size <= 44){
+      alert("Aucun son capturé !");
+      this.stream.getTracks().forEach(track => track.stop());
+      return;
+    }
+
+    this.voiceService.sendAudio(blob, this.currentEquip.id).subscribe({
+      next: (res: any) => {
+        console.log("Commande vocale:", res);
+
+        if(res.command === "ON") this.currentEquip.etat = true;
+        if(res.command === "OFF") this.currentEquip.etat = false;
+
+        this.cd.detectChanges();
+      },
+      error: err => console.error(err)
+    });
+
+    this.stream.getTracks().forEach(track => track.stop());
+
+  });
+}
+
 }

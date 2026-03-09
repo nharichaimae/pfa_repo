@@ -261,5 +261,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "pfa__.net.Controllers.VoiceController",
+    "Method": "VoiceCommand",
+    "RelativePath": "api/voice/command",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "audio",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "equipementId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]
